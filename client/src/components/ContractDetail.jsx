@@ -2,6 +2,13 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { contractsAPI } from '../services/api';
 import LoadingSkeleton from './LoadingSkeleton';
+import {
+  CONTRACT_LABELS,
+  STATUS_COLORS,
+  RISK_COLORS,
+  RISK_ICON_COLORS,
+  DATE_FORMAT_OPTIONS
+} from '../constants';
 
 const ContractDetail = () => {
   const { contractId } = useParams();
@@ -19,7 +26,6 @@ const ContractDetail = () => {
     try {
       setLoading(true);
       const result = await contractsAPI.getContractDetails(contractId);
-      
       if (result.success) {
         setContract(result.data);
         setError(null);
@@ -27,45 +33,20 @@ const ContractDetail = () => {
         setError(result.error);
       }
     } catch (err) {
-      setError('Failed to fetch contract details');
+      setError(CONTRACT_LABELS.ERROR_FETCH_DETAILS);
     } finally {
       setLoading(false);
     }
   };
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'Active': return 'bg-green-100 text-green-800';
-      case 'Expired': return 'bg-red-100 text-red-800';
-      case 'Renewal Due': return 'bg-yellow-100 text-yellow-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-  const getRiskColor = (risk) => {
-    switch (risk) {
-      case 'Low': return 'bg-green-100 text-green-800';
-      case 'Medium': return 'bg-yellow-100 text-yellow-800';
-      case 'High': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-  const getRiskIconColor = (risk) => {
-    switch (risk) {
-      case 'High': return 'text-red-500';
-      case 'Medium': return 'text-yellow-500';
-      case 'Low': return 'text-green-500';
-      default: return 'text-gray-500';
-    }
-  };
-
+  const getStatusColor = (status) => STATUS_COLORS[status] || STATUS_COLORS.default;
+  const getRiskColor = (risk) => RISK_COLORS[risk] || RISK_COLORS.default;
+  const getRiskIconColor = (risk) => RISK_ICON_COLORS[risk] || RISK_ICON_COLORS.default;
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
+    return new Date(dateString).toLocaleDateString(
+      DATE_FORMAT_OPTIONS.locale,
+      DATE_FORMAT_OPTIONS.options
+    );
   };
 
   const formatConfidence = (confidence) => {
@@ -125,7 +106,7 @@ const ContractDetail = () => {
           </div>
           <div className="ml-3">
             <h3 className="text-sm font-medium text-red-800">
-              Error loading contract
+              {CONTRACT_LABELS.ERROR_LOADING_CONTRACT}
             </h3>
             <div className="mt-2 text-sm text-red-700">
               {error}
@@ -135,7 +116,7 @@ const ContractDetail = () => {
                 onClick={() => navigate('/dashboard')}
                 className="bg-red-100 px-3 py-2 rounded-md text-sm font-medium text-red-800 hover:bg-red-200"
               >
-                Back to Dashboard
+                {CONTRACT_LABELS.BACK_TO_DASHBOARD}
               </button>
             </div>
           </div>
@@ -147,13 +128,13 @@ const ContractDetail = () => {
   if (!contract) {
     return (
       <div className="text-center py-12">
-        <h3 className="text-lg font-medium text-gray-900">Contract not found</h3>
-        <p className="mt-2 text-gray-500">The contract you're looking for doesn't exist.</p>
+        <h3 className="text-lg font-medium text-gray-900">{CONTRACT_LABELS.CONTRACT_NOT_FOUND}</h3>
+        <p className="mt-2 text-gray-500">{CONTRACT_LABELS.CONTRACT_NOT_FOUND_DESC}</p>
         <button
           onClick={() => navigate('/dashboard')}
           className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
         >
-          Back to Dashboard
+          {CONTRACT_LABELS.BACK_TO_DASHBOARD}
         </button>
       </div>
     );
@@ -171,7 +152,7 @@ const ContractDetail = () => {
             <svg className="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            Back to Contracts
+            {CONTRACT_LABELS.BACK_TO_CONTRACTS}
           </button>
           <h1 className="text-3xl font-bold text-gray-900">{contract.name}</h1>
           <p className="mt-1 text-lg text-gray-600">{contract.parties}</p>
@@ -189,7 +170,7 @@ const ContractDetail = () => {
       {/* Contract Metadata */}
       <div className="bg-white shadow rounded-lg">
         <div className="px-4 py-5 sm:p-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">Contract Details</h3>
+          <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">{CONTRACT_LABELS.HEADER}</h3>
           <dl className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
             <div>
               <dt className="text-sm font-medium text-gray-500">Start Date</dt>
@@ -223,7 +204,7 @@ const ContractDetail = () => {
         {/* Clauses Section */}
         <div className="bg-white shadow rounded-lg">
           <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">Key Clauses</h3>
+            <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">{CONTRACT_LABELS.KEY_CLAUSES}</h3>
             <div className="space-y-4">
               {contract.clauses.map((clause, index) => (
                 <div key={index} className="border border-gray-200 rounded-lg p-4">
@@ -258,7 +239,7 @@ const ContractDetail = () => {
         {/* AI Insights Section */}
         <div className="bg-white shadow rounded-lg">
           <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">AI Risk Insights</h3>
+            <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">{CONTRACT_LABELS.AI_INSIGHTS}</h3>
             <div className="space-y-4">
               {contract.insights.map((insight, index) => (
                 <div key={index} className="border border-gray-200 rounded-lg p-4">
@@ -293,12 +274,12 @@ const ContractDetail = () => {
         <div className="bg-white shadow rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Evidence & References</h3>
+              <h3 className="text-lg leading-6 font-medium text-gray-900">{CONTRACT_LABELS.EVIDENCE}</h3>
               <button
                 onClick={() => setShowEvidence(!showEvidence)}
                 className="text-sm text-blue-600 hover:text-blue-500"
               >
-                {showEvidence ? 'Hide Details' : 'Show Details'}
+                {showEvidence ? CONTRACT_LABELS.HIDE_DETAILS : CONTRACT_LABELS.SHOW_DETAILS}
               </button>
             </div>
             

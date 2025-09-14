@@ -1,9 +1,9 @@
-import axios from 'axios';
 
-const API_BASE_URL = '/';
+import axios from 'axios';
+import { API_CONFIG } from './api.config';
 
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: API_CONFIG.BASE_URL,
   timeout: 10000,
 });
 
@@ -12,28 +12,28 @@ export const contractsAPI = {
   // Get all contracts
   getContracts: async () => {
     try {
-      const response = await api.get('/contracts.json');
+      const response = await api.get(API_CONFIG.CONTRACTS_ENDPOINT);
       return { success: true, data: response.data };
     } catch (error) {
-      console.error('Error fetching contracts:', error);
-      return { success: false, error: 'Failed to fetch contracts' };
+      console.error(API_CONFIG.ERROR_MESSAGES.FETCH_CONTRACTS, error);
+      return { success: false, error: API_CONFIG.ERROR_MESSAGES.FETCH_CONTRACTS };
     }
   },
 
   // Get contract details by ID
   getContractDetails: async (contractId) => {
     try {
-      const response = await api.get('/contract-details.json');
+      const response = await api.get(API_CONFIG.CONTRACT_DETAILS_ENDPOINT);
       const contractDetails = response.data[contractId];
-      
+
       if (contractDetails) {
         return { success: true, data: contractDetails };
       } else {
-        return { success: false, error: 'Contract not found' };
+        return { success: false, error: API_CONFIG.ERROR_MESSAGES.CONTRACT_NOT_FOUND };
       }
     } catch (error) {
-      console.error('Error fetching contract details:', error);
-      return { success: false, error: 'Failed to fetch contract details' };
+      console.error(API_CONFIG.ERROR_MESSAGES.FETCH_CONTRACT_DETAILS, error);
+      return { success: false, error: API_CONFIG.ERROR_MESSAGES.FETCH_CONTRACT_DETAILS };
     }
   },
 };
@@ -44,8 +44,8 @@ export const uploadAPI = {
     return new Promise((resolve) => {
       // Simulate upload delay
       setTimeout(() => {
-        const isSuccess = Math.random() > 0.1; // 90% success rate
-        
+        const isSuccess = Math.random() < API_CONFIG.UPLOAD_SUCCESS_RATE;
+
         if (isSuccess) {
           resolve({
             success: true,
@@ -53,17 +53,17 @@ export const uploadAPI = {
               id: `file-${Date.now()}`,
               name: file.name,
               size: file.size,
-              status: 'Success',
+              status: API_CONFIG.ERROR_MESSAGES.UPLOAD_SUCCESS,
               uploadedAt: new Date().toISOString(),
             },
           });
         } else {
           resolve({
             success: false,
-            error: 'Upload failed. Please try again.',
+            error: API_CONFIG.ERROR_MESSAGES.UPLOAD_FAILED,
           });
         }
-      }, 2000); // 2 second delay
+      }, API_CONFIG.UPLOAD_DELAY_MS);
     });
   },
 };
