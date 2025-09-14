@@ -1,0 +1,115 @@
+{
+  "c1": {
+    "id": "c1",
+    "name": "MSA 2025",
+    "parties": "Microsoft & ABC Corp",
+    "start": "2023-01-01",
+    "expiry": "2025-12-31",
+    "status": "Active",
+    "risk": "Medium",
+    "clauses": [
+      { "title": "Termination", "summary": "90 days notice period required for contract termination.", "confidence": 0.82 },
+      { "title": "Liability Cap", "summary": "Total liability limited to 12 months' fees.", "confidence": 0.87 },
+      { "title": "Data Protection", "summary": "GDPR compliant data handling procedures.", "confidence": 0.94 },
+      { "title": "Service Level Agreement", "summary": "99.9% uptime guarantee with penalty clauses.", "confidence": 0.79 }
+    ],
+    "insights": [
+      { "risk": "High", "message": "Liability cap excludes data breach costs and indirect damages." },
+      { "risk": "Medium", "message": "Renewal auto-renews unless cancelled 60 days before expiry." },
+      { "risk": "Low", "message": "Payment terms are standard 30-day net." }
+    ],
+    "evidence": [
+      { "source": "Section 12.2", "snippet": "Total liability limited to 12 months' fees, excluding data breach costs.", "relevance": 0.91 },
+      { "source": "Section 8.1", "snippet": "Contract auto-renews for 12 months unless cancelled 60 days prior to expiry.", "relevance": 0.88 },
+      { "source": "Section 5.3", "snippet": "Service availability guaranteed at 99.9% with SLA credits for downtime.", "relevance": 0.85 }
+    ]
+  },
+  "c2": {
+    "id": "c2",
+    "name": "Network Services Agreement",
+    "parties": "TelNet & ABC Corp",
+    "start": "2022-10-10",
+    "expiry": "2025-10-10",
+    "status": "Renewal Due",
+    "risk": "High",
+    "clauses": [
+      { "title": "Network Availability", "summary": "99.95% network uptime guarantee.", "confidence": 0.91 },
+      { "title": "Security Requirements", "summary": "ISO 27001 compliance mandatory.", "confidence": 0.76 },
+      { "title": "Data Retention", "summary": "7-year data retention policy.", "confidence": 0.83 }
+    ],
+    "insights": [
+      { "risk": "High", "message": "Network security requirements may conflict with current infrastructure." },
+      { "risk": "High", "message": "Renewal negotiation window closing in 30 days." },
+      { "risk": "Medium", "message": "Data retention policy exceeds regulatory requirements." }
+    ],
+    "evidence": [
+      { "source": "Section 4.2", "snippet": "Network must maintain 99.95% availability excluding scheduled maintenance.", "relevance": 0.93 },
+      { "source": "Section 7.1", "snippet": "All data must be retained for minimum 7 years per compliance requirements.", "relevance": 0.87 }
+    ]
+  },
+  "c3": {
+    "id": "c3",
+    "name": "Cloud Infrastructure License",
+    "parties": "AWS & TechStart Inc",
+    "start": "2022-08-15",
+    "expiry": "2024-08-15",
+    "status": "Expired",
+    "risk": "Low",
+    "clauses": [
+      { "title": "Usage Limits", "summary": "Monthly usage capped at $50,000.", "confidence": 0.95 },
+      { "title": "Data Location", "summary": "Data must remain in US-East region.", "confidence": 0.88 }
+    ],
+    "insights": [
+      { "risk": "Low", "message": "Contract expired 4 months ago - needs renewal or migration." },
+      { "risk": "Medium", "message": "Current usage exceeds original limits." }
+    ],
+    "evidence": [
+      { "source": "Section 3.1", "snippet": "Monthly usage charges shall not exceed $50,000 without prior approval.", "relevance": 0.92 }
+    ]
+  },
+  "c4": {
+    "id": "c4",
+    "name": "Software Development Agreement",
+    "parties": "DevCorp & Enterprise Ltd",
+    "start": "2024-03-20",
+    "expiry": "2026-03-20",
+    "status": "Active",
+    "risk": "Medium",
+    "clauses": [
+      { "title": "Intellectual Property", "summary": "All developed code belongs to client.", "confidence": 0.89 },
+      { "title": "Delivery Milestones", "summary": "Monthly delivery with acceptance testing.", "confidence": 0.77 },
+      { "title": "Support Period", "summary": "12 months post-delivery support included.", "confidence": 0.84 }
+    ],
+    "insights": [
+      { "risk": "Medium", "message": "IP ownership clause may limit future development flexibility." },
+      { "risk": "Low", "message": "Support period aligns with industry standards." }
+    ],
+    "evidence": [
+      { "source": "Section 6.2", "snippet": "All intellectual property developed under this agreement shall belong to the Client.", "relevance": 0.91 }
+    ]
+  },
+  "c5": {
+    "id": "c5",
+    "name": "Data Processing Agreement",
+    "parties": "DataCorp & PrivacyFirst",
+    "start": "2023-06-30",
+    "expiry": "2025-06-30",
+    "status": "Active",
+    "risk": "High",
+    "clauses": [
+      { "title": "Data Minimization", "summary": "Only collect data necessary for service provision.", "confidence": 0.92 },
+      { "title": "Breach Notification", "summary": "72-hour breach notification requirement.", "confidence": 0.96 },
+      { "title": "Right to Erasure", "summary": "Complete data deletion within 30 days of request.", "confidence": 0.88 }
+    ],
+    "insights": [
+      { "risk": "High", "message": "Data breach notification timeline may be challenging to meet." },
+      { "risk": "High", "message": "Data erasure process needs technical validation." },
+      { "risk": "Medium", "message": "Data minimization requirements may impact analytics capabilities." }
+    ],
+    "evidence": [
+      { "source": "Section 9.1", "snippet": "Data Controller must be notified of any breach within 72 hours of discovery.", "relevance": 0.94 },
+      { "source": "Section 11.3", "snippet": "Data deletion must be completed within 30 days of erasure request.", "relevance": 0.89 }
+    ]
+  }
+}
+
